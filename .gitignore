@@ -1,13 +1,5 @@
-# ignore everything except .gitignore and C# scripts under Assets
 *
 !.gitignore
-
-# allow Assets folder and its subdirectories
 !/Assets/
 !/Assets/**/
-
-# ignore all files under Assets
-/Assets/**
-
-# allow C# scripts under Assets
 !/Assets/**/*.cs
