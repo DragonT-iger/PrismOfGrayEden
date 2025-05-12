@@ -19,7 +19,7 @@ public class ObjectPause : MonoBehaviour, IPausable
     public void Resume()
     {
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
-        if (rb.linearVelocity == Vector2.zero && (velocityBeforePause != default && rotationBeforePause != 0f))
+        if (rb.linearVelocity == Vector2.zero && (velocityBeforePause != default || rotationBeforePause != 0f))
         {
             rb.linearVelocity = velocityBeforePause;
             rb.angularVelocity = rotationBeforePause;
