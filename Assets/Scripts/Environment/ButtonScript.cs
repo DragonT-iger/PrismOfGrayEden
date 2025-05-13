@@ -8,7 +8,7 @@ public class ButtonScript : MonoBehaviour, IPausable
     public bool isButtonOn = false;
     float buttonPressedTime = 0.0f;
     short buttonState = 1;
-    bool isPaused = false;
+    bool isPaused = true;
     public void Pause()
     {
         isPaused = true;
