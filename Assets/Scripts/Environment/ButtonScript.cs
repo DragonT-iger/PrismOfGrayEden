@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class ButtonScript : MonoBehaviour
 {
-    [SerializeField] float buttneDisableTime = 5.0f;
+    [SerializeField] float buttonDisableTime DisableTime = 5.0f;
 
     bool isButtonPressed = false;
     public bool isButtonOn = false;
@@ -37,7 +37,7 @@ public class ButtonScript : MonoBehaviour
         }
         else
         {
-            if (buttonPressedTime >= buttneDisableTime)
+            if (buttonPressedTime >= buttonDisableTime)
             {
                 isButtonOn = false;
                 if (buttonState != 2)
