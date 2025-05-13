@@ -15,7 +15,7 @@ public class DoorBehaviorScript : MonoBehaviour, IPausable
 
     void Update()
     {
-        if (isPaused)
+        if (isPaused == false)
         {
             if (button.GetComponent<ButtonScript>().isButtonOn)
             {
@@ -30,6 +30,11 @@ public class DoorBehaviorScript : MonoBehaviour, IPausable
                 {
                     transform.localPosition += new Vector3(0.0f, -0.5f, 0.0f) * Time.deltaTime;
                 }
+            }
+            if (transform.localPosition.y <= 0.9f)
+            {
+                gameObject.GetComponent<Collider2D>().enabled = false;
+                gameObject.GetComponent<NavMeshPlus.Components.NavMeshModifier>().enabled = false;
             }
         }
     }
