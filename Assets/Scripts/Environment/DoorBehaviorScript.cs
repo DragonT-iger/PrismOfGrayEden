@@ -3,7 +3,7 @@ using UnityEngine;
 public class DoorBehaviorScript : MonoBehaviour, IPausable
 {
     [SerializeField] GameObject button;
-    bool isPaused = false;
+    bool isPaused = true;
     public void Pause()
     {
         isPaused = true;
@@ -31,10 +31,15 @@ public class DoorBehaviorScript : MonoBehaviour, IPausable
                     transform.localPosition += new Vector3(0.0f, -0.5f, 0.0f) * Time.deltaTime;
                 }
             }
-            if (transform.localPosition.y <= 0.9f)
+            if (transform.localPosition.y >= 0.9f)
             {
-                gameObject.GetComponent<Collider2D>().enabled = false;
-                gameObject.GetComponent<NavMeshPlus.Components.NavMeshModifier>().enabled = false;
+                gameObject.GetComponent<Collider2D>().isTrigger = true;
+                gameObject.GetComponent<NavMeshPlus.Components.NavMeshModifier>().area = 0;
+            }
+            else
+            {
+                gameObject.GetComponent<Collider2D>().isTrigger = false;
+                gameObject.GetComponent<NavMeshPlus.Components.NavMeshModifier>().area = 1;
             }
         }
     }
