@@ -34,7 +34,7 @@ public class ButtonScript : MonoBehaviour, IPausable
 
     private void Update()
     {
-        if (isPaused)
+        if (isPaused == false)
         {
             if (isButtonPressed)
             {
