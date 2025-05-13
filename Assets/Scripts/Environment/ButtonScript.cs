@@ -1,13 +1,22 @@
 using UnityEngine;
 
-public class ButtonScript : MonoBehaviour
+public class ButtonScript : MonoBehaviour, IPausable
 {
-    [SerializeField] float buttneDisableTime = 5.0f;
+    [SerializeField] float buttonDisableTime = 5.0f;
 
     bool isButtonPressed = false;
     public bool isButtonOn = false;
     float buttonPressedTime = 0.0f;
     short buttonState = 1;
+    bool isPaused = false;
+    public void Pause()
+    {
+        isPaused = true;
+    }
+    public void Resume()
+    {
+        isPaused = false;
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
@@ -25,34 +34,37 @@ public class ButtonScript : MonoBehaviour
 
     private void Update()
     {
-        if (isButtonPressed)
+        if (isPaused)
         {
-            buttonPressedTime = 0.0f;
-            isButtonOn = true;
-            if (buttonState != 0)
+            if (isButtonPressed)
             {
-                gameObject.GetComponent<SpriteRenderer>().color = Color.green;
-                buttonState = 0;
-            }
-        }
-        else
-        {
-            if (buttonPressedTime >= buttneDisableTime)
-            {
-                isButtonOn = false;
-                if (buttonState != 2)
+                buttonPressedTime = 0.0f;
+                isButtonOn = true;
+                if (buttonState != 0)
                 {
-                    gameObject.GetComponent<SpriteRenderer>().color = Color.red;
-                    buttonState = 2;
+                    gameObject.GetComponent<SpriteRenderer>().color = Color.green;
+                    buttonState = 0;
                 }
             }
             else
             {
-                buttonPressedTime += Time.deltaTime;
-                if (buttonState != 1)
+                if (buttonPressedTime >= buttonDisableTime)
                 {
-                    gameObject.GetComponent<SpriteRenderer>().color = Color.yellow;
-                    buttonState = 1;
+                    isButtonOn = false;
+                    if (buttonState != 2)
+                    {
+                        gameObject.GetComponent<SpriteRenderer>().color = Color.red;
+                        buttonState = 2;
+                    }
+                }
+                else
+                {
+                    buttonPressedTime += Time.deltaTime;
+                    if (buttonState != 1)
+                    {
+                        gameObject.GetComponent<SpriteRenderer>().color = Color.yellow;
+                        buttonState = 1;
+                    }
                 }
             }
         }
