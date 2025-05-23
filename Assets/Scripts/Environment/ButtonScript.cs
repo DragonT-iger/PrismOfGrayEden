@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class ButtonScript : MonoBehaviour, IPausable
 {
-    [SerializeField] float buttonDisableTime = 5.0f;
+    [SerializeField] float buttneDisableTime = 5.0f;
 
     bool isButtonPressed = false;
     public bool isButtonOn = false;
@@ -38,9 +38,22 @@ public class ButtonScript : MonoBehaviour, IPausable
         {
             if (isButtonPressed)
             {
+<<<<<<< Updated upstream
                 buttonPressedTime = 0.0f;
                 isButtonOn = true;
                 if (buttonState != 0)
+=======
+                gameObject.GetComponent<SpriteRenderer>().color = Color.green;
+                buttonState = 0;
+            }
+        }
+        else
+        {
+            if (buttonPressedTime >= buttneDisableTime)
+            {
+                isButtonOn = false;
+                if (buttonState != 2)
+>>>>>>> Stashed changes
                 {
                     gameObject.GetComponent<SpriteRenderer>().color = Color.green;
                     buttonState = 0;
