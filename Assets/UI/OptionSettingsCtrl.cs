@@ -28,8 +28,8 @@ public class OptionSettingsCtrl : MonoBehaviour
     public Slider   sl_BackgroundSound;
     public GameObject txt_optionTitle;//settings 클릭 후 발생하는 option창의 타이틀 텍스트
     public GameObject img_OptionsPage;
+    public GameObject img_Title;      //play, setting, quit버튼이 나타나는 페이지
     public GameObject grid_ControlGuide;
-    public GameObject img_Keys;       //키패드 설정 이미지
     public GameObject grid_DisplayMode;
     public GameObject grid_DisplayResolution;
     public GameObject grid_SoundVolume;
@@ -43,6 +43,7 @@ public class OptionSettingsCtrl : MonoBehaviour
 
     [SerializeField] private Grid[] option;
 
+
     [SerializeField] private GameObject txt_options;
 
     private void Awake()
@@ -51,20 +52,20 @@ public class OptionSettingsCtrl : MonoBehaviour
         var enumCount = System.Enum.GetNames(typeof(OptionType)).Length;
         if (optionButtons.Length != enumCount)
         {
-            Debug.Log($"OptionSettingsCtrl: 버튼 배열 길이({optionButtons.Length})가 OptionType 개수({enumCount})와 다릅니다.");
+            Debug.LogError($"OptionSettingsCtrl: 버튼 배열 길이({optionButtons.Length})가 OptionType 개수({enumCount})와 다릅니다.");
         }
 
-        //for(int i = 0; i < optionButtons.Length; i++)
-        //{
-        //    optionButtons[i].SetActive(true); 
-        //}
+        for(int i = 0; i < optionButtons.Length; i++)
+        {
+            optionButtons[i].SetActive(true); 
+        }
     }
 
     public void Start()
     {
         img_OptionsPage.gameObject.SetActive(false); //전체 하위 오브젝트까지 모두 disabled
+        optionButtons[(int)OptionType.ControlGuide].SetActive(true);
         txt_optionTitle.gameObject.SetActive(true); //옵션 창의 타이틀 텍스트 options 활성화
-        optionButtons[(int)OptionType.ControlGuide].SetActive(true); //옵션창 뜨면 기본적으로 ctrl guide만 뜨도록
     }
 
     // 4) 클릭 시 호출되는 공통 메서드
@@ -72,7 +73,7 @@ public class OptionSettingsCtrl : MonoBehaviour
     {
         // 예: 클릭된 옵션 이름을 텍스트에 표시
         txt_options.gameObject.name = $"선택된 옵션: {option}";
-        
+
         switch (option)
         {
             case OptionType.ControlGuide:
@@ -189,6 +190,7 @@ public class OptionSettingsCtrl : MonoBehaviour
         if (Input.GetKey(KeyCode.Escape))
         {
             img_OptionsPage.gameObject.SetActive(false);
+            img_Title.gameObject.SetActive(true);
             print("Escape is Working");
         }
     }
@@ -200,7 +202,7 @@ public class OptionSettingsCtrl : MonoBehaviour
         {
            if(optionPage.ToString() != optionName.ToString())
            {
-               img_Keys.SetActive(false); //키패드 이미지
+               optionPage.gameObject.SetActive(false);
                 print("optionPage.ToString : " + optionPage.ToString() + "//optionNAme.DisplayName : " + optionName.ToString());
            }
         }

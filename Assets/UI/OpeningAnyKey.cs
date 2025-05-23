@@ -7,27 +7,21 @@ public class OpeningAnyKey : MonoBehaviour
     public Button     btn_pressAnyKey;
     public GameObject img_SettingsPage;
     public GameObject img_Title;
-    public UIImageAnimator uiAnim;
-
-    bool istemp = false;
 
     bool isClicked = false;
-    void Awake()
+    void Start()
     {
         img_SettingsPage.SetActive(true);
         img_Title.SetActive(false);
-        print("Awake pre opening");
     }
 
     private void Update()
     {
-        if (!isClicked && Input.anyKeyDown && !istemp)
+        if (!isClicked && Input.anyKeyDown)
         {
-            img_Title.SetActive(true);
             img_SettingsPage.SetActive(false);
+            img_Title.SetActive(true);
             print("GameSetting TItle On");
-            istemp = true;
-            SoundManager.Instance.PlaySFX("UIButtonClick");
         }
     }
 }

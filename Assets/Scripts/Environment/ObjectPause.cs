@@ -2,15 +2,20 @@ using UnityEngine;
 
 public class ObjectPause : MonoBehaviour, IPausable
 {
-    Vector2 velocityBeforePause = default;
+    public Vector2 VelocityBeforePause { get; private set; }
+    private bool isPaused;
+
+    public bool IsPaused { get => isPaused; }
+
     float rotationBeforePause = 0f;
 
     public void Pause()
     {
+        isPaused = true;
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         if (rb.linearVelocity != Vector2.zero)
         {
-            velocityBeforePause = rb.linearVelocity;
+            VelocityBeforePause = rb.linearVelocity;
             rotationBeforePause = rb.angularVelocity;
             rb.linearVelocity = Vector2.zero;
             rb.angularVelocity = 0f;
@@ -18,13 +23,19 @@ public class ObjectPause : MonoBehaviour, IPausable
     }
     public void Resume()
     {
+        isPaused = false;
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
-        if (rb.linearVelocity == Vector2.zero && (velocityBeforePause != default || rotationBeforePause != 0f))
+        if (rb.linearVelocity == Vector2.zero && (VelocityBeforePause != default || rotationBeforePause != 0f))
         {
-            rb.linearVelocity = velocityBeforePause;
+            rb.linearVelocity = VelocityBeforePause;
             rb.angularVelocity = rotationBeforePause;
-            velocityBeforePause = default;
+            VelocityBeforePause = default;
             rotationBeforePause = 0f;
         }
+    }
+
+    public void SetSavedVelocity(Vector2 input)
+    {
+        VelocityBeforePause = input;
     }
 }

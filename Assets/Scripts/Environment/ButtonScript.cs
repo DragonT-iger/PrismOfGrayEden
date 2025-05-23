@@ -2,13 +2,26 @@ using UnityEngine;
 
 public class ButtonScript : MonoBehaviour, IPausable
 {
-    [SerializeField] float buttneDisableTime = 5.0f;
+    [SerializeField] float buttonDisableTime = 5.0f;
+    [SerializeField] string[] buttonTriggerTag;
 
     bool isButtonPressed = false;
     public bool isButtonOn = false;
     float buttonPressedTime = 0.0f;
-    short buttonState = 1;
-    bool isPaused = false;
+    bool isPaused = true;
+
+    Animator animator;
+    NavMeshUpdater navMeshUpdater;
+
+    public Vector2 VelocityBeforePause { get; private set; } = Vector2.zero;
+
+    public bool IsPaused { get => isPaused; }
+
+    private void Start()
+    {
+        animator = GetComponent<Animator>();
+        navMeshUpdater = Object.FindFirstObjectByType<NavMeshUpdater>();
+    }
     public void Pause()
     {
         isPaused = true;
@@ -19,67 +32,57 @@ public class ButtonScript : MonoBehaviour, IPausable
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        for (int i = 0; i < buttonTriggerTag.Length; i++)
         {
-            isButtonPressed = true;
+            if (collision.CompareTag(buttonTriggerTag[i]))
+            {
+                isButtonPressed = true;
+                SoundManager.Instance.PlaySFX("ButtonDown");
+                break;
+            }
         }
     }
+
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        for (int i = 0; i < buttonTriggerTag.Length; i++)
         {
-            isButtonPressed = false;
+            if (collision.CompareTag(buttonTriggerTag[i]))
+            {
+                isButtonPressed = false;
+                break;
+            }
         }
     }
 
     private void Update()
     {
-        if (isPaused)
+        if (isButtonPressed)
         {
-            if (isButtonPressed)
-            {
-<<<<<<< Updated upstream
-                buttonPressedTime = 0.0f;
-                isButtonOn = true;
-                if (buttonState != 0)
-=======
-                gameObject.GetComponent<SpriteRenderer>().color = Color.green;
-                buttonState = 0;
-            }
+            buttonPressedTime = 0.0f;
+            isButtonOn = true;
+            animator.SetBool("isButtonOn", isButtonOn);
         }
-        else
+        else if (isPaused == false)
         {
-            if (buttonPressedTime >= buttneDisableTime)
+            if (buttonPressedTime >= buttonDisableTime)
             {
-                isButtonOn = false;
-                if (buttonState != 2)
->>>>>>> Stashed changes
+                if (isButtonOn == true)
                 {
-                    gameObject.GetComponent<SpriteRenderer>().color = Color.green;
-                    buttonState = 0;
+                    SoundManager.Instance.PlaySFX("ButtonUp");
                 }
+                isButtonOn = false;
+                animator.SetBool("isButtonOn", isButtonOn);
             }
             else
             {
-                if (buttonPressedTime >= buttonDisableTime)
-                {
-                    isButtonOn = false;
-                    if (buttonState != 2)
-                    {
-                        gameObject.GetComponent<SpriteRenderer>().color = Color.red;
-                        buttonState = 2;
-                    }
-                }
-                else
-                {
-                    buttonPressedTime += Time.deltaTime;
-                    if (buttonState != 1)
-                    {
-                        gameObject.GetComponent<SpriteRenderer>().color = Color.yellow;
-                        buttonState = 1;
-                    }
-                }
+                buttonPressedTime += Time.deltaTime;
             }
         }
+    }
+
+    public void SetSavedVelocity(Vector2 input)
+    {
+        return;
     }
 }
