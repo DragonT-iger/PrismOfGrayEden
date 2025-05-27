@@ -3,6 +3,8 @@
 ### 팀 명
 일요일부터 밤새기
 
+[GameBanner](https://github.com/DragonT-iger/PrismOfGrayEden/blob/main/GameBanner.png)
+
 ## 게임 소개
 
 **잿빛 낙원의 프리즘**은 시간이 멈춘 흑백 세계에서 깨어난 빛과 시간의 화신이 대시와 상호작용을 통해 자신의 정체와 이 세계의 진실을 알아가는 탈출 게임입니다. 게임 내에 텍스트를 최소화하고, 이미지를 적극 활용한다는 특징을 가지고 있습니다.
