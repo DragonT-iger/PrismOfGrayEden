@@ -3,7 +3,7 @@
 ### 팀 명
 일요일부터 밤새기
 
-[GameBanner](https://github.com/DragonT-iger/PrismOfGrayEden/blob/main/GameBanner.png)
+![GameBanner](https://github.com/DragonT-iger/PrismOfGrayEden/blob/main/GameBanner.png)
 
 ## 게임 소개
 
